@@ -1,4 +1,4 @@
-﻿namespace CC
+﻿namespace CC.DTOs
 {
 	public class UserDto
 	{
