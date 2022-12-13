@@ -33,6 +33,11 @@ namespace CC.Controllers
 				return BadRequest("User not found");
 			}
 
+			if (VerifyPasswordHash(userData.Password, user.PasswordHash, user.PasswordSalt))
+			{
+				return BadRequest("Wrong Password");
+			}
+
 			return Ok("Token");
 		}
 
@@ -50,7 +55,16 @@ namespace CC.Controllers
 		}
 		//
 
-
+		private bool VerifyPasswordHash(string password, byte[] passwordHash, byte[] passwordSalt)
+		{
+			using (var hmc = new HMACSHA512(passwordSalt))
+			{
+				var computedHash = hmc.ComputeHash(
+					System.Text.Encoding.UTF8.GetBytes(password)
+					);
+				return computedHash.SequenceEqual(passwordHash);
+			}
+		}
 
 	}
 }
