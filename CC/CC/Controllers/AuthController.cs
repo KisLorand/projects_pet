@@ -24,6 +24,18 @@ namespace CC.Controllers
 			return Ok(user);
 		}
 
+
+		[HttpPost("login")]
+		public async Task<ActionResult<string>> Login(UserDto userData)
+		{
+			if (user.Username == userData.Username)
+			{
+				return BadRequest("User not found");
+			}
+
+			return Ok("Token");
+		}
+
 		//change the hashing in prod
 		private void CreatePasswordHash(string password, out byte[] passwordHash, out byte[] passwordSalt)
 		{
@@ -36,5 +48,9 @@ namespace CC.Controllers
 
 			}
 		}
+		//
+
+
+
 	}
 }
