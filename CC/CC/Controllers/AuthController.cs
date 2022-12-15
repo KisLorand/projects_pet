@@ -1,5 +1,6 @@
 ﻿using CC.DTOs;
 using CC.Properties;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
@@ -20,6 +21,16 @@ namespace CC.Controllers
 		{
 			_configuration = configuration;
 		}
+
+		// could be moved
+		[HttpGet, Authorize]
+		public ActionResult<string> GetMe()
+		{
+			var userName = User?.Identity?.Name;
+			var role = User.FindFirstValue(ClaimTypes.Role);
+			return Ok(userName);
+		}
+		//
 
 		[HttpPost("register")]
 		public async Task<ActionResult<User>> Register(UserDto userData)
@@ -76,7 +87,8 @@ namespace CC.Controllers
 		{
 			List<Claim> claims = new List<Claim>
 			{
-				new Claim(ClaimTypes.Name, user.Username)
+				new Claim(ClaimTypes.Name, user.Username),
+				new Claim(ClaimTypes.Role, "Admin"),
 				// Id, email should be added
 			};
 
