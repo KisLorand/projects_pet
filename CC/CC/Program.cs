@@ -15,6 +15,7 @@ builder.Services.AddEndpointsApiExplorer();
 // services
 builder.Services.AddScoped<IUserService, UserService>();
 //
+builder.Services.AddHttpContextAccessor();
 
 builder.Services.AddSwaggerGen(options => {
 	options.AddSecurityDefinition("oauth2", new OpenApiSecurityScheme
