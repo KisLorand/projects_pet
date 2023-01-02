@@ -1,4 +1,6 @@
-﻿namespace CC.Services
+﻿using System.Security.Claims;
+
+namespace CC.Services
 {
 	public class UserService : IUserService
 	{
@@ -10,7 +12,12 @@
 
 		public string GetUserName()
 		{
-			throw new NotImplementedException();
+			string result = string.Empty;
+			if (_httpContextAccessor.HttpContext != null)
+			{
+				result = _httpContextAccessor.HttpContext.User.FindFirstValue(ClaimTypes.Name);
+			}
+			return result;
 		}
 	}
 }
