@@ -12,11 +12,12 @@ namespace CC.Services
 
 		public string GetUserName()
 		{
-			string result = string.Empty;
+			var result = string.Empty;
 			if (_httpContextAccessor.HttpContext != null)
 			{
 				result = _httpContextAccessor.HttpContext.User.FindFirstValue(ClaimTypes.Name);
 			}
+			Console.WriteLine(result);
 			return result;
 		}
 	}
