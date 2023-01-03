@@ -67,6 +67,9 @@ namespace CC.Controllers
 
 			string token = CreateToken(user);
 
+			var refreshToken = GenerateRefreshToken();
+			SetRefreshToken(refreshToken); //http only, on javascript will be able to read it
+
 			return Ok(token);
 		}
 
@@ -120,5 +123,15 @@ namespace CC.Controllers
 			return jwt;
 		}
 
+
+		private RefreshToken GenerateRefreshToken()
+		{
+			throw new NotImplementedException();
+		}
+
+		private void SetRefreshToken(RefreshToken refreshToken)
+		{
+			throw new NotImplementedException();
+		}
 	}
 }
