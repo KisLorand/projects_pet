@@ -76,7 +76,25 @@ namespace CC.Controllers
 		[HttpPost("refresh-token")] // periodically called by the frontend to refresh the token
 		public async Task<ActionResult<string>> RefreshToken()
 		{
-			throw new NotImplementedException();
+			var refreshToken = Request.Cookies["refreshToken"];
+
+			//search the db, for user who has this token
+			//
+			if (!user.RefreshToken.Equals(refreshToken))
+			{
+				return Unauthorized("Invalid Refresh Token");
+			}
+			else if (user.TokenExpires < DateTime.Now)
+			{
+				return Unauthorized("Token expired");
+			}
+			//
+
+			string token = CreateToken(user);
+			var newRefreshToken = GenerateRefreshToken();
+			SetRefreshToken(newRefreshToken);
+
+			return Ok(token);
 		}
 		
 		//change the hashing in prod
