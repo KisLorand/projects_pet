@@ -73,6 +73,12 @@ namespace CC.Controllers
 			return Ok(token);
 		}
 
+		[HttpPost("refresh-token")] // periodically called by the frontend to refresh the token
+		public async Task<ActionResult<string>> RefreshToken()
+		{
+			throw new NotImplementedException();
+		}
+		
 		//change the hashing in prod
 		private void CreatePasswordHash(string password, out byte[] passwordHash, out byte[] passwordSalt)
 		{
