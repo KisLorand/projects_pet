@@ -126,7 +126,14 @@ namespace CC.Controllers
 
 		private RefreshToken GenerateRefreshToken()
 		{
-			throw new NotImplementedException();
+			var refreshToken = new RefreshToken
+			{
+				Token = Convert.ToBase64String(RandomNumberGenerator.GetBytes(64)),
+				Expires = DateTime.Now.AddDays(1), // could be 15 mins
+				Created = DateTime.Now
+			};
+
+			return refreshToken;
 		}
 
 		private void SetRefreshToken(RefreshToken refreshToken)
