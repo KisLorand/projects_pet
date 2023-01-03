@@ -26,12 +26,16 @@ namespace CC.Controllers
 		}
 
 		// could be moved
-		[HttpGet, Authorize]
+		[HttpGet]
+		[Authorize]
 		public ActionResult<string> GetMe()
 		{
-			var userName = User?.Identity?.Name;
-			var role = User.FindFirstValue(ClaimTypes.Role);
+			string userName =_userService.GetUserName();
 			return Ok(userName);
+
+			/*var userName = User?.Identity?.Name;
+			var role = User.FindFirstValue(ClaimTypes.Role);
+			return Ok(userName);*/
 		}
 		//
 
@@ -63,7 +67,7 @@ namespace CC.Controllers
 
 			string token = CreateToken(user);
 
-			return Ok("Token");
+			return Ok(token);
 		}
 
 		//change the hashing in prod
