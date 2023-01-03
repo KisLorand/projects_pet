@@ -138,7 +138,16 @@ namespace CC.Controllers
 
 		private void SetRefreshToken(RefreshToken refreshToken)
 		{
-			throw new NotImplementedException();
+			var cookieOptions = new CookieOptions 
+			{
+				HttpOnly = true,
+				Expires = refreshToken.Expires
+			};
+			Response.Cookies.Append("refreshToken", refreshToken.Token, cookieOptions);
+
+			user.RefreshToken = refreshToken.Token;
+			user.TokenCreated = refreshToken.Created;
+			user.TokenExpires = refreshToken.Expires;
 		}
 	}
 }
