@@ -1,5 +1,7 @@
 ﻿using CC.DTOs;
 using CC.Properties;
+using CC.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
@@ -15,11 +17,27 @@ namespace CC.Controllers
 	{
 		public static User user = new User();
 		private readonly IConfiguration _configuration;
+		private readonly IUserService _userService;
 
-		public AuthController(IConfiguration configuration)
+		public AuthController(IConfiguration configuration, IUserService userService)
 		{
 			_configuration = configuration;
+			_userService = userService;
 		}
+
+		// could be moved
+		[HttpGet]
+		[Authorize]
+		public ActionResult<string> GetMe()
+		{
+			string userName =_userService.GetUserName();
+			return Ok(userName);
+
+			/*var userName = User?.Identity?.Name;
+			var role = User.FindFirstValue(ClaimTypes.Role);
+			return Ok(userName);*/
+		}
+		//
 
 		[HttpPost("register")]
 		public async Task<ActionResult<User>> Register(UserDto userData)
@@ -49,7 +67,7 @@ namespace CC.Controllers
 
 			string token = CreateToken(user);
 
-			return Ok("Token");
+			return Ok(token);
 		}
 
 		//change the hashing in prod
@@ -76,7 +94,8 @@ namespace CC.Controllers
 		{
 			List<Claim> claims = new List<Claim>
 			{
-				new Claim(ClaimTypes.Name, user.Username)
+				new Claim(ClaimTypes.Name, user.Username),
+				new Claim(ClaimTypes.Role, "Admin"),
 				// Id, email should be added
 			};
 
