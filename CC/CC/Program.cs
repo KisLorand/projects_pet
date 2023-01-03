@@ -20,7 +20,7 @@ builder.Services.AddHttpContextAccessor();
 builder.Services.AddSwaggerGen(options => {
 	options.AddSecurityDefinition("oauth2", new OpenApiSecurityScheme
 	{
-		Description = "Standard Authorization header using the bearer scheme (\"bearer {token}\")",
+		Description = "Standard Authorization header using the bearer scheme (\"bearer <token>\")", //  like bearer fcvzfubzzubcu
 		In = ParameterLocation.Header,
 		Name = "Authorization",
 		Type = SecuritySchemeType.ApiKey
@@ -34,7 +34,7 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
 			ValidateIssuerSigningKey = true,
 			IssuerSigningKey = new SymmetricSecurityKey(
 				System.Text.Encoding.UTF8.GetBytes(
-					builder.Configuration.GetSection("AppSettings : Token").Value)),
+					builder.Configuration.GetSection("AppSettings:Token").Value)),
 			ValidateIssuer = false,
 			ValidateAudience = false
 		};
