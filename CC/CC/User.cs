@@ -1,4 +1,4 @@
-﻿namespace CC.Properties
+﻿namespace CC
 {
 	public class User
 	{
