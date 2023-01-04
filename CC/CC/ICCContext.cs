@@ -4,7 +4,8 @@ namespace CC
 {
 	public interface ICCContext
 	{
-        DbSet<User> Users { get; set; }
-        void SaveChanges();
-    }
+		DbSet<User> Users { get; set; }
+		void SaveChanges();
+		
+	}
 }
