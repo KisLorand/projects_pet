@@ -4,12 +4,16 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 VisualStudioVersion = 17.1.32421.90
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CC", "CC\CC.csproj", "{96BCD14B-152A-4147-9824-733F15402432}"
+	ProjectSection(ProjectDependencies) = postProject
+		{ABD631AD-6629-4E66-A87F-FAFED9AD05B6} = {ABD631AD-6629-4E66-A87F-FAFED9AD05B6}
+		{068E46EA-3273-44AE-935B-F4B572D638BA} = {068E46EA-3273-44AE-935B-F4B572D638BA}
+	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CC.Frontend", "CC.Frontend\CC.Frontend.csproj", "{017DDACE-29E8-4130-B489-5CEC50BA5A19}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CC.Infrastructure", "CC.Infrastructure\CC.Infrastructure.csproj", "{ABD631AD-6629-4E66-A87F-FAFED9AD05B6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CC.Application", "CC.Application\CC.Application.csproj", "{068E46EA-3273-44AE-935B-F4B572D638BA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CC.Application", "CC.Application\CC.Application.csproj", "{068E46EA-3273-44AE-935B-F4B572D638BA}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
