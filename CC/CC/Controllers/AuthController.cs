@@ -1,5 +1,4 @@
 ﻿using CC.DTOs;
-using CC.Properties;
 using CC.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
