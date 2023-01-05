@@ -12,6 +12,9 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CC.Frontend", "CC.Frontend\CC.Frontend.csproj", "{017DDACE-29E8-4130-B489-5CEC50BA5A19}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CC.Infrastructure", "CC.Infrastructure\CC.Infrastructure.csproj", "{ABD631AD-6629-4E66-A87F-FAFED9AD05B6}"
+	ProjectSection(ProjectDependencies) = postProject
+		{068E46EA-3273-44AE-935B-F4B572D638BA} = {068E46EA-3273-44AE-935B-F4B572D638BA}
+	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CC.Application", "CC.Application\CC.Application.csproj", "{068E46EA-3273-44AE-935B-F4B572D638BA}"
 EndProject
