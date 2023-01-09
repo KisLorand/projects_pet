@@ -1,5 +1,8 @@
+using CC;
+using CC.Infrastructure;
 using CC.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using Swashbuckle.AspNetCore.Filters;
@@ -39,8 +42,20 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
 			ValidateAudience = false
 		};
 	});
+builder.Services.AddDbContext<ICCContext, CCContext>(options =>
+{
+	var connectionstring = builder.Configuration.GetConnectionString("BadcampContext");
+	options.UseSqlServer(connectionstring);
+});
+
+builder.Services.AddTransient<CCSeed>();
 
 var app = builder.Build();
+
+using var scope = app.Services.CreateScope();
+var services = scope.ServiceProvider;
+var initialiser = services.GetRequiredService<CCSeed>();
+initialiser.Seed();
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
