@@ -18,7 +18,11 @@ namespace CC.Infrastructure
         }
         public void Seed()
         {
-            _context.Database.Migrate();
+            //_context.Database.Migrate();
+            if (_context != null && _context.Database != null)
+            {
+                _context.Database.Migrate();
+            }
             if (!_context.Users.Any())
             {
                 using (var hmac = new HMACSHA512())
