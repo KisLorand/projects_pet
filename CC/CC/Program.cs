@@ -44,7 +44,7 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
 	});
 builder.Services.AddDbContext<ICCContext, CCContext>(options =>
 {
-	var connectionstring = builder.Configuration.GetConnectionString("BadcampContext");
+	var connectionstring = builder.Configuration.GetConnectionString("CCommandContext");
 	options.UseSqlServer(connectionstring);
 });
 
