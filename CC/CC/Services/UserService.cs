@@ -28,9 +28,12 @@ namespace CC.Services
 			throw new NotImplementedException();
 		}
 
-		public User AddUser(int id)
+		public User AddUser(User user)
 		{
-			throw new NotImplementedException();
+			_dbContext.Users.Add(user);
+			_dbContext.SaveChanges();
+
+			return user;
 		}
 	}
 }

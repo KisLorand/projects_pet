@@ -3,5 +3,6 @@
 	public interface IUserService
 	{
 		string GetUserName();
+		User AddUser(User user);
 	}
 }
