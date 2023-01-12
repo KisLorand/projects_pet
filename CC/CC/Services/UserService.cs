@@ -28,6 +28,11 @@ namespace CC.Services
 			throw new NotImplementedException();
 		}
 
+		public User GetUserByName(string userName)
+		{
+			throw new NotImplementedException();
+		}
+
 		public User AddUser(User user)
 		{
 			_dbContext.Users.Add(user);
