@@ -30,7 +30,10 @@ namespace CC.Services
 
 		public User GetUserByName(string userName)
 		{
-			throw new NotImplementedException();
+			User user = _dbContext.Users.Where(user => user.Username == userName).FirstOrDefault();
+			_dbContext.SaveChanges();
+
+			return user;
 		}
 
 		public User AddUser(User user)
