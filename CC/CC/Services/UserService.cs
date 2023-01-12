@@ -5,12 +5,14 @@ namespace CC.Services
 	public class UserService : IUserService
 	{
 		private readonly IHttpContextAccessor _httpContextAccessor;
-		public UserService(IHttpContextAccessor httpContextAccessor)
+		private readonly ICCContext _dbContext;
+		public UserService(IHttpContextAccessor httpContextAccessor, ICCContext context)
 		{
 			_httpContextAccessor = httpContextAccessor;
+			_dbContext = context;
 		}
 
-		public string GetUserName()
+		public string GetUserName() //GetCurrentUserName
 		{
 			var result = string.Empty;
 			if (_httpContextAccessor.HttpContext != null)
@@ -19,6 +21,16 @@ namespace CC.Services
 			}
 			Console.WriteLine(result);
 			return result;
+		}
+
+		public User GetUserById(int id)
+		{
+			throw new NotImplementedException();
+		}
+
+		public User AddUser(int id)
+		{
+			throw new NotImplementedException();
 		}
 	}
 }
