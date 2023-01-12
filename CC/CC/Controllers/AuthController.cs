@@ -56,6 +56,8 @@ namespace CC.Controllers
 		[HttpPost("login")]
 		public async Task<ActionResult<string>> Login(UserDto userData)
 		{
+			user = _userService.GetUserByName(userData.Username);
+
 			if (user.Username != userData.Username)
 			{
 				return BadRequest("User not found");
