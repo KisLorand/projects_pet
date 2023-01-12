@@ -47,6 +47,8 @@ namespace CC.Controllers
 			user.PasswordHash = passwordHash;
 			user.PasswordSalt = passwordSalt;
 
+			_userService.AddUser(user);
+
 			return Ok(user);
 		}
 
