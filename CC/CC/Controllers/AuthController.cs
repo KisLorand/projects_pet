@@ -15,13 +15,15 @@ namespace CC.Controllers
 	public class AuthController : ControllerBase
 	{
 		public static User user = new User();
+		private ILogger<AuthController> _logger;
 		private readonly IConfiguration _configuration;
 		private readonly IUserService _userService;
 
-		public AuthController(IConfiguration configuration, IUserService userService)
+		public AuthController(IConfiguration configuration, IUserService userService, ILogger<AuthController> logger)
 		{
 			_configuration = configuration;
 			_userService = userService;
+			_logger = logger;
 		}
 
 		// could be moved
@@ -47,6 +49,8 @@ namespace CC.Controllers
 			user.PasswordHash = passwordHash;
 			user.PasswordSalt = passwordSalt;
 
+			_userService.AddUser(user);
+
 			return Ok(user);
 		}
 
@@ -54,6 +58,8 @@ namespace CC.Controllers
 		[HttpPost("login")]
 		public async Task<ActionResult<string>> Login(UserDto userData)
 		{
+			user = _userService.GetUserByName(userData.Username);
+
 			if (user.Username != userData.Username)
 			{
 				return BadRequest("User not found");
