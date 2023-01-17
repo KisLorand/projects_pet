@@ -27,6 +27,35 @@ const Register = () => {
     const [errMsg, setErrMsg] = useState('');
     const [success, setSuccess] = useState(false);
 
+    // setting the focus when the component loads
+    useEffect(() => {
+        userRef.current.focus(); 
+    }, [])
+
+    // for the username, validation
+    useEffect(() => {
+        const result = USER_REGEX.test(user);
+        console.log(result);
+        console.log(user);
+        setValidName(result);
+    
+    }, [user])
+
+    // pwd useEffect, validation
+    useEffect(() => {
+        const result = PWD_REGEX.test(pwd);
+        console.log(result);
+        console.log(pwd);
+        setValidPwd(result);
+        const match = pwd === matchPwd;
+        setValidMatch(match);
+    }, [pwd, matchPwd])
+
+    // error message, disappear/clear when changing username/pws
+    useEffect(() => {
+        setErrMsg('');
+    }, [user, pwd, matchPwd])
+
   return (
     <div>
 
