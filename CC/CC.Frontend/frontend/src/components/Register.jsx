@@ -1,5 +1,5 @@
 import { useRef, useState, useEffect } from "react";
-import { faCheck, faTimes, faInfoCircle, faL } from "@fortawesome/free-solid-svg-icons";
+import { faCheck, faTimes, faInfoCircle } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 const USER_REGEX = /^[A-z][A-z0-9-_]{3,23}$/;
@@ -62,7 +62,7 @@ const Register = () => {
         <form>
             <label htmlFor="username">
                 Username:
-                <span className={validName ? "valid" : "offscreen"}>
+                <span className={validName ? "valid" : "hide"}>
                     <FontAwesomeIcon icon={faCheck} />
                 </span>
                 <span className={validName || !user ? "hide" : "invalid"}>
@@ -86,6 +86,37 @@ const Register = () => {
                 4 to 24 characters. <br />
                 Must begin with a letter. <br/>
                 Letters, numbers, underscores, hyphens allowed.
+            </p>
+
+            <label htmlFor="password">
+                Password:
+                <span className={validPwd ? "valid" : "hide"}>
+                    <FontAwesomeIcon icon={faCheck} />
+                </span>
+                <span className={validPwd || !pwd ? "hide" : "invalid"}>
+                    <FontAwesomeIcon icon={faTimes} />
+                </span>
+            </label>
+            <input
+                type="password"
+                id="password"
+                onChange={(e) => setPwd(e.target.value)}
+                required
+                aria-invalid={validPwd ? "false" : "true"}
+                aria-describedby="pwdnote" // a <p>, that describes the field
+                onFocus={()=> setPwdFocus(true)}
+                onBlur={()=> setPwdFocus(false)} // when leaving the input field
+            />
+            <p id="pwdnote" className={pwdFocus && !validPwd ?  "instructions" : "offscreen"}>
+                <FontAwesomeIcon icon={faInfoCircle}/>
+                8 to 24 characters. <br />
+                Must include uppercase and lowercase letters, a number and a special character.<br />
+                Allowed special characters: 
+                <span aria-label="exclamation mark">!</span> 
+                <span aria-label="at symbol">@</span> 
+                <span aria-label="hashtag">#</span> 
+                <span aria-label="dollar sign">$</span> 
+                <span aria-label="percent">%</span>
             </p>
         </form>
     </section>
