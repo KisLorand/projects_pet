@@ -13,6 +13,7 @@ const Registration = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+        console.log(newUser);
         try {
             const response = await fetch(url,{
                 method: "POST",
@@ -44,21 +45,16 @@ const Registration = () => {
     <div className="form">
      <form onSubmit={handleSubmit}>
 
-       <div className="input-container">
-         <label>Username </label>
-         <input type="text" name="uname" required />
-         {/* {renderErrorMessage("uname")} */}
-       </div>
 
-       <div className="input-container">
-         <label>Password </label>
-         <input type="password" name="pass" required />
-         {/* {renderErrorMessage("pass")} */}
-       </div>
 
+       <InputContainer
+            labelText="Username"
+            inputName="username"
+            inputVariable={newUser.username}
+        />
         <InputContainer
-            labelText="Pwd"
-            inputName="pwd"
+            labelText="Password"
+            inputName="password"
             inputVariable={newUser.password}
         />
 
