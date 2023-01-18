@@ -1,10 +1,12 @@
 import { useRef, useState, useEffect } from "react";
 import { faCheck, faTimes, faInfoCircle } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { async } from "q";
 
 const USER_REGEX = /^[A-z][A-z0-9-_]{3,23}$/;
 const PWD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%]).{8,24}$/;
-const REGISTER_URL = '/register';
+//const REGISTER_URL = '/register';
+const REGISTER_URL = 'https://localhost:44309/api/Auth/register';
 
 
 const Register = () => {
@@ -55,11 +57,48 @@ const Register = () => {
         setErrMsg('');
     }, [user, pwd, matchPwd])
 
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+
+        // if button enabled with JS hack, recheck values
+        const v1 = USER_REGEX.test(user);
+        const v2 = PWD_REGEX.test(pwd);
+        if (!v1 || !v2) {
+            setErrMsg("Invalid Entry");
+            return;
+        }
+        console.log("submission");
+        //
+        let errMsg = "error";
+        try {
+            const response = await fetch(REGISTER_URL,{
+                method: "POST",
+                headers: {
+                  "Content-Type": "application/json",
+                },
+                body: JSON.stringify(
+                    {
+                        "username" : user,
+                        "password" : pwd
+                    }
+                ),
+              });
+            console.log("POST");
+            if (!response.ok) throw Error('Error occoured. Reload the app');
+        } catch (error) {
+            errMsg = error.message;
+        }
+        //checking the beckend response
+        //
+        console.log(user, pwd);
+        setSuccess(true);
+    };
+
   return (
     <section>
         <p ref={errRef} className={errMsg ? "errmsg" : "offscreen"} aria-live="assertive">{errMsg}</p>
         <h1>Register</h1>
-        <form>
+        <form onSubmit={handleSubmit}>
             <label htmlFor="username">
                 Username:
                 <span className={validName ? "valid" : "hide"}>
