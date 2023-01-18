@@ -103,9 +103,9 @@ const Register = () => {
                 onChange={(e) => setPwd(e.target.value)}
                 required
                 aria-invalid={validPwd ? "false" : "true"}
-                aria-describedby="pwdnote" // a <p>, that describes the field
+                aria-describedby="pwdnote"
                 onFocus={()=> setPwdFocus(true)}
-                onBlur={()=> setPwdFocus(false)} // when leaving the input field
+                onBlur={()=> setPwdFocus(false)}
             />
             <p id="pwdnote" className={pwdFocus && !validPwd ?  "instructions" : "offscreen"}>
                 <FontAwesomeIcon icon={faInfoCircle}/>
@@ -124,7 +124,7 @@ const Register = () => {
                 <span className={validMatch && matchPwd ? "valid" : "hide"}>
                     <FontAwesomeIcon icon={faCheck} />
                 </span>
-                <span className={validPwd || !matchPwd ? "hide" : "invalid"}>
+                <span className={validMatch || !matchPwd ? "hide" : "invalid"}>
                     <FontAwesomeIcon icon={faTimes} />
                 </span>
             </label>
@@ -142,6 +142,12 @@ const Register = () => {
                 <FontAwesomeIcon icon={faInfoCircle}/>
                 Must match the first password input field.
             </p>
+
+            <button disabled={!validName || !validPwd || !validMatch ? true : false}>
+                <a href="#">{/* react router link */}
+                    Sign Up
+                </a> 
+            </button>
         </form>
     </section>
   )
