@@ -12,6 +12,7 @@ const NavBar = () => {
             <ul>
                 <li><Link to="/home">Home</Link></li>
                 <li><Link to ="/registration">Registration</Link></li>
+                {!localStorage.getItem("userToken") ? <li><Link to="/login">Login</Link></li> : <li><Link to="/home">Home</Link></li>}
             </ul>
         </nav>
     );
