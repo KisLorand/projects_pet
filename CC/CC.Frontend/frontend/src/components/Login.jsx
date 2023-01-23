@@ -65,15 +65,23 @@ const Login = () => {
                         "password" : pwd
                     }
                 ),
-              });
+            });
             console.log(response);
+            if (response.ok) {
+                const body = await response.json();
+                localStorage.setItem("userToken", JSON.stringify(
+                    
+                        body
+                
+                    ));
+            }
             if (!response.ok) throw Error('Error occoured. Reload the app');
         } catch (error) {
             errMsg = error.message;
         }
         //checking the beckend response
         //
-        console.log(user, pwd);
+        console.log("user :  " + user, pwd);
         setSuccess(true);
     };
 
