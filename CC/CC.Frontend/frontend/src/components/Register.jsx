@@ -84,11 +84,19 @@ const Register = () => {
             console.log("POST");
             if (!response.ok) throw Error('Error occoured. Reload the app');
         } catch (error) {
-            errMsg = error.message;
+            if (!error.response) {
+                setErrMsg('No Server Response')
+            } else if (error.response?.status === 400) {
+                setErrMsg('Missing Username or Password');
+            }
+            //errMsg = error.message;
         }
         //checking the beckend response
         //
         console.log(user, pwd);
+        setUser('');
+        setValidName('');
+        setPwd('');
         setSuccess(true);
     };
 
