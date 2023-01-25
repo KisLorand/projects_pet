@@ -29,9 +29,9 @@ const Login = () => {
     const [errMsg, setErrMsg] = useState('');
     const [success, setSuccess] = useState(false);
 
-/*     useEffect(() => {
+    useEffect(() => {
         userRef.current.focus(); 
-    }, []) */
+    }, [])
 
     useEffect(() => {
         const result = USER_REGEX.test(user);
