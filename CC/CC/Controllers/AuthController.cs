@@ -62,7 +62,7 @@ namespace CC.Controllers
 
 			if (user is null || user.Username != userData.Username )
 			{
-				return BadRequest("User not found");
+				return NotFound("User not found");
 			}
 
 			if (!VerifyPasswordHash(userData.Password, user.PasswordHash, user.PasswordSalt))
