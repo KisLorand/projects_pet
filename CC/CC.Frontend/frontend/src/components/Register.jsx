@@ -1,11 +1,9 @@
 import { useRef, useState, useEffect } from "react";
 import { faCheck, faTimes, faInfoCircle } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { async } from "q";
 
 const USER_REGEX = /^[A-z][A-z0-9-_]{3,23}$/;
 const PWD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%]).{8,24}$/;
-//const REGISTER_URL = '/register';
 const REGISTER_URL = 'https://localhost:44309/api/Auth/register';
 
 
@@ -84,13 +82,23 @@ const Register = () => {
                 ),
               });
             console.log("POST");
-            if (!response.ok) throw Error('Error occoured. Reload the app');
+            if (!response.ok) throw Error(response.status);
         } catch (error) {
-            errMsg = error.message;
+            if (!error?.message) {
+                setErrMsg('No Server Response')
+            } else if (error.message === '400') {
+                setErrMsg('Missing Username or Password');
+            } else {
+                setErrMsg('Registration Failed');
+            }
+            errRef.current.focus();
         }
         //checking the beckend response
         //
         console.log(user, pwd);
+        setUser('');
+        setValidName('');
+        setPwd('');
         setSuccess(true);
     };
 

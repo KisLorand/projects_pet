@@ -60,9 +60,9 @@ namespace CC.Controllers
 		{
 			user = _userService.GetUserByName(userData.Username);
 
-			if (user.Username != userData.Username)
+			if (user is null || user.Username != userData.Username )
 			{
-				return BadRequest("User not found");
+				return NotFound("User not found");
 			}
 
 			if (!VerifyPasswordHash(userData.Password, user.PasswordHash, user.PasswordSalt))
@@ -74,8 +74,9 @@ namespace CC.Controllers
 
 			var refreshToken = GenerateRefreshToken();
 			SetRefreshToken(refreshToken); //http only, on javascript will be able to read it
-
-			return Ok(token);
+			
+			return Ok(refreshToken);
+			//return Ok(token);
 		}
 
 		[HttpPost("refresh-token")] // periodically called by the frontend to refresh the token
