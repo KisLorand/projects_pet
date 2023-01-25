@@ -82,14 +82,16 @@ const Register = () => {
                 ),
               });
             console.log("POST");
-            if (!response.ok) throw Error('Error occoured. Reload the app');
+            if (!response.ok) throw Error(response.status);
         } catch (error) {
-            if (!error.response) {
+            if (!error?.message) {
                 setErrMsg('No Server Response')
-            } else if (error.response?.status === 400) {
+            } else if (error.message === '400') {
                 setErrMsg('Missing Username or Password');
+            } else {
+                setErrMsg('Registration Failed');
             }
-            //errMsg = error.message;
+            errRef.current.focus();
         }
         //checking the beckend response
         //
