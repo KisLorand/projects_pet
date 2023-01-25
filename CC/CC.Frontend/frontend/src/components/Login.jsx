@@ -1,13 +1,20 @@
 import React from 'react';
-import { useRef, useState, useEffect } from "react";
+import { useRef, useState, useEffect, useLocation, useNavigate } from "react";
 import { faCheck, faTimes, faInfoCircle } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { Link, redirect } from 'react-router-dom';
 
 const USER_REGEX = /^[A-z][A-z0-9-_]{3,23}$/;
 const PWD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%]).{8,24}$/;
 const LOGIN_URL = 'https://localhost:44309/api/Auth/login';
 
 const Login = () => {
+    //
+/*     const redirect = useNavigate();
+    const location = useLocation();
+    const from = location.state?.from?.pathname || "/"; */
+    //
+
     const userRef = useRef();
     const errRef = useRef();
 
@@ -52,7 +59,7 @@ const Login = () => {
         }
         console.log("submission");
         //
-        let errMsg = "error";
+
         try {
             const response = await fetch(LOGIN_URL,{
                 method: "POST",
@@ -75,83 +82,104 @@ const Login = () => {
                 
                     ));
             }
-            if (!response.ok) throw Error('Error occoured. Reload the app');
+            if (!response.ok) {
+                throw Error(response.status);
+            } 
+            console.log("user :  " + user, pwd);
+            setUser('');
+            setValidName('');
+            setPwd('');
+            setSuccess(true);
         } catch (error) {
-            errMsg = error.message;
+            console.log("error");
+            if (!error?.message) {
+                setErrMsg('No Server Response')
+            } else if (error.message === '400') {
+                setErrMsg('Wrong Username or Password');
+            } else if (error.message === '404') {
+                setErrMsg('User Not Found');
+            }
         }
-        //checking the beckend response
-        //
-        console.log("user :  " + user, pwd);
-        setSuccess(true);
+
+        //redirect(from, { replace: true });
     };
 
   return (
-    <section>
-        <p ref={errRef} className={errMsg ? "errmsg" : "offscreen"} aria-live="assertive">{errMsg}</p>
-        <h1>Login</h1>
-        <form onSubmit={handleSubmit}>
-            <label htmlFor="username">Username:
-                <span className={validName ? "valid" : "hide"}>
-                    <FontAwesomeIcon icon={faCheck} />
-                </span>
-                <span className={validName || !user ? "hide" : "invalid"}>
-                    <FontAwesomeIcon icon={faTimes} />
-                </span>
-            </label>
-            <input
-                type="text"
-                id="username"
-                ref={userRef}
-                autoComplete="off"
-                onChange={(e) => setUser(e.target.value)}
-                required
-                aria-invalid={validName ? "false" : "true"}
-                aria-describedby="uidnote"
-                onFocus={()=> setUserFocus(true)}
-                onBlur={()=> setUserFocus(false)}
-            />
-            <p id="uidnote" className={userFocus && user && !validName ? "instructions" : "offscreen"}>
-                <FontAwesomeIcon icon={faInfoCircle}/>
-                4 to 24 characters. <br />
-                Must begin with a letter. <br/>
-                Letters, numbers, underscores, hyphens allowed.
-            </p>
-            <label htmlFor="password">Password:
-                <span className={validPwd ? "valid" : "hide"}>
-                    <FontAwesomeIcon icon={faCheck} />
-                </span>
-                <span className={validPwd || !pwd ? "hide" : "invalid"}>
-                    <FontAwesomeIcon icon={faTimes} />
-                </span>
-            </label>
-            <input
-                type="password"
-                id="password"
-                onChange={(e) => setPwd(e.target.value)}
-                required
-                aria-invalid={validPwd ? "false" : "true"}
-                aria-describedby="pwdnote"
-                onFocus={()=> setPwdFocus(true)}
-                onBlur={()=> setPwdFocus(false)}
-            />
-            <p id="pwdnote" className={pwdFocus && !validPwd ?  "instructions" : "offscreen"}>
-                <FontAwesomeIcon icon={faInfoCircle}/>
-                8 to 24 characters. <br />
-                Must include uppercase and lowercase letters, a number and a special character.<br />
-                Allowed special characters: 
-                <span aria-label="exclamation mark">!</span> 
-                <span aria-label="at symbol">@</span> 
-                <span aria-label="hashtag">#</span> 
-                <span aria-label="dollar sign">$</span> 
-                <span aria-label="percent">%</span>
-            </p>
-            <button disabled={!validName || !validPwd ? true : false}>
-                <a href="#">{/* react router link */}
+    <>
+    {success ? <Link to='/home'>Home</Link> :
+        <section>
+            <p ref={errRef} className={errMsg ? "errmsg" : "offscreen"} aria-live="assertive">{errMsg}</p>
+            <h1>Login</h1>
+            <form onSubmit={handleSubmit}>
+                <label htmlFor="username">Username:
+                    <span className={validName ? "valid" : "hide"}>
+                        <FontAwesomeIcon icon={faCheck} />
+                    </span>
+                    <span className={validName || !user ? "hide" : "invalid"}>
+                        <FontAwesomeIcon icon={faTimes} />
+                    </span>
+                </label>
+                <input
+                    type="text"
+                    id="username"
+                    ref={userRef}
+                    autoComplete="off"
+                    onChange={(e) => setUser(e.target.value)}
+                    required
+                    aria-invalid={validName ? "false" : "true"}
+                    aria-describedby="uidnote"
+                    onFocus={()=> setUserFocus(true)}
+                    onBlur={()=> setUserFocus(false)}
+                />
+                <p id="uidnote" className={userFocus && user && !validName ? "instructions" : "offscreen"}>
+                    <FontAwesomeIcon icon={faInfoCircle}/>
+                    4 to 24 characters. <br />
+                    Must begin with a letter. <br/>
+                    Letters, numbers, underscores, hyphens allowed.
+                </p>
+                <label htmlFor="password">Password:
+                    <span className={validPwd ? "valid" : "hide"}>
+                        <FontAwesomeIcon icon={faCheck} />
+                    </span>
+                    <span className={validPwd || !pwd ? "hide" : "invalid"}>
+                        <FontAwesomeIcon icon={faTimes} />
+                    </span>
+                </label>
+                <input
+                    type="password"
+                    id="password"
+                    onChange={(e) => setPwd(e.target.value)}
+                    required
+                    aria-invalid={validPwd ? "false" : "true"}
+                    aria-describedby="pwdnote"
+                    onFocus={()=> setPwdFocus(true)}
+                    onBlur={()=> setPwdFocus(false)}
+                />
+                <p id="pwdnote" className={pwdFocus && !validPwd ?  "instructions" : "offscreen"}>
+                    <FontAwesomeIcon icon={faInfoCircle}/>
+                    8 to 24 characters. <br />
+                    Must include uppercase and lowercase letters, a number and a special character.<br />
+                    Allowed special characters: 
+                    <span aria-label="exclamation mark">!</span> 
+                    <span aria-label="at symbol">@</span> 
+                    <span aria-label="hashtag">#</span> 
+                    <span aria-label="dollar sign">$</span> 
+                    <span aria-label="percent">%</span>
+                </p>
+                <button disabled={!validName || !validPwd ? true : false}>
                     Sign Up
-                </a> 
-            </button>
-        </form>
-    </section>
+                </button>
+            </form>
+            <p>
+                Need an Account?<br />
+                <span className="line">
+                    {/*put router link here*/}
+                    <a href="#">Sign Up</a>
+                </span>
+            </p>
+        </section>
+    }
+    </>
   )
 }
 
