@@ -57,8 +57,6 @@ const Login = () => {
             setErrMsg("Invalid Entry");
             return;
         }
-        console.log("submission");
-        //
 
         try {
             const response = await fetch(LOGIN_URL,{
@@ -76,32 +74,27 @@ const Login = () => {
             console.log(response);
             if (response.ok) {
                 const body = await response.json();
-                localStorage.setItem("userToken", JSON.stringify(
-                    
-                        body
-                
-                    ));
+                localStorage.setItem("userToken", JSON.stringify(body));
             }
             if (!response.ok) {
                 throw Error(response.status);
-            } 
-            console.log("user :  " + user, pwd);
+            }
             setUser('');
             setValidName('');
             setPwd('');
             setSuccess(true);
         } catch (error) {
-            console.log("error");
             if (!error?.message) {
                 setErrMsg('No Server Response')
             } else if (error.message === '400') {
                 setErrMsg('Wrong Username or Password');
             } else if (error.message === '404') {
                 setErrMsg('User Not Found');
+            } else {
+                setErrMsg('Login Failed');
             }
+            errRef.current.focus();
         }
-
-        //redirect(from, { replace: true });
     };
 
   return (
