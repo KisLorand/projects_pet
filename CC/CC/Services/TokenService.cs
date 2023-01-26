@@ -12,9 +12,9 @@ namespace CC.Services
 			_dbContext = context;
 		}
 
-		public RefreshTokenDTO GetRefreshToken(int userId, string token)
+		public RefreshTokenDTO GetRefreshToken(int userId, string userToken)
 		{
-			throw new NotImplementedException();
+			return _dbContext.UserTokens.Where(token => token.UserId == userId && token.Token == userToken).FirstOrDefault();
 		}
 
 		public List<RefreshTokenDTO> GetTokenByUserId(int userId)
