@@ -36,5 +36,13 @@ namespace CC.Services
 
 			return currentToken;
 		}
+
+		public RefreshTokenDTO AddToken(RefreshTokenDTO userToken)
+		{
+			_dbContext.UserTokens.Add(userToken);
+			_dbContext.SaveChanges();
+
+			return userToken;
+		}
 	}
 }
