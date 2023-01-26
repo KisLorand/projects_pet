@@ -1,4 +1,5 @@
-﻿using CC.DTOs;
+﻿using CC.Application;
+using CC.DTOs;
 using CC.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
@@ -77,6 +78,31 @@ namespace CC.Controllers
 			
 			return Ok(refreshToken);
 			//return Ok(token);
+		}
+
+		[HttpPost("logout")]
+		public async Task<ActionResult<string>> Logout(LogoutRequest request, User user)
+		{
+			if (request.userToken is null || user is null)
+			{
+				return BadRequest("No Token or User Found In Request");
+			}
+
+			RefreshToken token = GetToken(request.userToken.Token); //_dbContext.UserTokens.Where(token => token.Token == userToken.Token).FirstOrDefault();
+			if (token is null)
+			{
+				return NotFound("Token Not Found");
+			}
+			
+			user = _userService.GetUserByName(user.Username);
+			if (user is null)
+			{
+				return NotFound("User Not Found");
+			}
+
+			token.Expires = request.logoutTime; //SetTokenExpiration(token, logoutTime)
+
+			return Ok(request);
 		}
 
 		[HttpPost("refresh-token")] // periodically called by the frontend to refresh the token
