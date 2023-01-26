@@ -1,4 +1,6 @@
-﻿namespace CC.Services
+﻿using CC.DTOs;
+
+namespace CC.Services
 {
 	public class TokenService : ITokenService
 	{
@@ -10,9 +12,17 @@
 			_dbContext = context;
 		}
 
-		public RefreshToken GetTokenByUserId(int id)
+		public RefreshTokenDTO GetRefreshToken(int userId, string token)
 		{
 			throw new NotImplementedException();
+		}
+
+		public List<RefreshTokenDTO> GetTokenByUserId(int userId)
+		{
+			List<RefreshTokenDTO> tokens = _dbContext.UserTokens.Where(token => token.UserId == userId).ToList();
+			_dbContext.SaveChanges();
+
+			return tokens;
 		}
 	}
 }
