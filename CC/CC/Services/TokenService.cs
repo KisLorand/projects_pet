@@ -25,9 +25,16 @@ namespace CC.Services
 			return tokens;
 		}
 
-		public RefreshTokenDTO SetTokenExpiration(string token, DateTime logoutTime)
+		public RefreshTokenDTO SetTokenExpiration(string userToken, DateTime logoutTime)
 		{
-			throw new NotImplementedException();
+			var currentToken = _dbContext.UserTokens.Where(token => token.Token == userToken).FirstOrDefault();
+			if (currentToken != null)
+			{
+				currentToken.Expires = logoutTime;
+			}
+			_dbContext.SaveChanges();
+
+			return currentToken;
 		}
 	}
 }
