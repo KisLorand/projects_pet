@@ -10,5 +10,6 @@ namespace CC.Application
 	{
 		public RefreshToken userToken {get;set;}
 		public DateTime logoutTime {get;set;}
+		public User User {get;set;}
 	}
 }
