@@ -8,5 +8,6 @@ namespace CC.Services
 
 		RefreshTokenDTO GetRefreshToken(int userId, string token);
 		RefreshTokenDTO SetTokenExpiration(string token, DateTime logoutTime);
+		RefreshTokenDTO AddToken(RefreshTokenDTO userToken);
 	}
 }
