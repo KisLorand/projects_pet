@@ -90,17 +90,18 @@ namespace CC.Controllers
 				return BadRequest("No Token or User Found In Request");
 			}
 
-			RefreshTokenDTO token = _tokenService.GetRefreshToken(user.Id, request.userToken.Token);
+			RefreshTokenDTO refreshToken = _tokenService.GetRefreshToken(user.Id, request.userToken.Token);
 			user = _userService.GetUserByName(user.Username);
 
-			if (token is null || user is null)
+			if (refreshToken is null || user is null)
 			{
 				return NotFound("User or Token Not Found");
 			}
 
-			token.Expires = request.logoutTime; //SetTokenExpiration(token, logoutTime)
+			var updatedToken = _tokenService.SetTokenExpiration(refreshToken.Token, request.logoutTime);
 
-			return Ok(request);
+			return Ok(updatedToken);
+			//return Ok(request);
 		}
 
 		[HttpPost("refresh-token")] // periodically called by the frontend to refresh the token
