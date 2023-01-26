@@ -90,16 +90,12 @@ namespace CC.Controllers
 				return BadRequest("No Token or User Found In Request");
 			}
 
-			RefreshToken token = GetToken(request.userToken.Token); //_dbContext.UserTokens.Where(token => token.Token == userToken.Token).FirstOrDefault();
-			if (token is null)
-			{
-				return NotFound("Token Not Found");
-			}
-			
+			RefreshTokenDTO token = _tokenService.GetRefreshToken(user.Id, request.userToken.Token);
 			user = _userService.GetUserByName(user.Username);
-			if (user is null)
+
+			if (token is null || user is null)
 			{
-				return NotFound("User Not Found");
+				return NotFound("User or Token Not Found");
 			}
 
 			token.Expires = request.logoutTime; //SetTokenExpiration(token, logoutTime)
