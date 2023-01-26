@@ -1,7 +1,11 @@
-﻿namespace CC.Services
+﻿using CC.DTOs;
+
+namespace CC.Services
 {
 	public interface ITokenService
 	{
-		RefreshToken GetTokenByUserId(int id);
+		List<RefreshTokenDTO> GetTokenByUserId(int userId);
+
+		RefreshTokenDTO GetRefreshToken(int userId, string token);
 	}
 }
