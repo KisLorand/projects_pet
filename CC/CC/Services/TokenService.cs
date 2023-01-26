@@ -24,5 +24,10 @@ namespace CC.Services
 
 			return tokens;
 		}
+
+		public RefreshTokenDTO SetTokenExpiration(string token, DateTime logoutTime)
+		{
+			throw new NotImplementedException();
+		}
 	}
 }
