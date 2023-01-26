@@ -19,11 +19,13 @@ namespace CC.Controllers
 		private ILogger<AuthController> _logger;
 		private readonly IConfiguration _configuration;
 		private readonly IUserService _userService;
+		private readonly ITokenService _tokenService;
 
-		public AuthController(IConfiguration configuration, IUserService userService, ILogger<AuthController> logger)
+		public AuthController(IConfiguration configuration, IUserService userService, ITokenService tokenService, ILogger<AuthController> logger)
 		{
 			_configuration = configuration;
 			_userService = userService;
+			_tokenService = tokenService;
 			_logger = logger;
 		}
 
