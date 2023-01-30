@@ -73,25 +73,33 @@ namespace CC.Controllers
 				return BadRequest(userData.Password);
 			}
 
-			string token = CreateToken(user);
+			string token = CreateToken(user); // return a token that conains user info
 
-			var refreshToken = GenerateRefreshToken();
+			var refreshToken = GenerateRefreshToken(token);
 			SetRefreshToken(refreshToken); //http only, on javascript will be able to read it
-			
+
+			_tokenService.AddToken(new RefreshTokenDTO {
+				UserId=user.Id,
+				Token=refreshToken.Token,
+				Created=refreshToken.Created,
+				Expires=refreshToken.Expires,
+			});
+
 			return Ok(refreshToken);
 			//return Ok(token);
 		}
 
+		//should be protected
 		[HttpPost("logout")]
-		public async Task<ActionResult<string>> Logout(LogoutRequest request, User user)
+		public async Task<ActionResult<string>> Logout(LogoutRequest request)
 		{
 			if (request.userToken is null || user is null)
 			{
 				return BadRequest("No Token or User Found In Request");
 			}
 
-			RefreshTokenDTO refreshToken = _tokenService.GetRefreshToken(user.Id, request.userToken.Token);
-			user = _userService.GetUserByName(user.Username);
+			RefreshTokenDTO refreshToken = _tokenService.GetRefreshToken(request.User.Id, request.userToken.Token);
+			user = _userService.GetUserByName(request.User.Username);
 
 			if (refreshToken is null || user is null)
 			{
@@ -179,11 +187,11 @@ namespace CC.Controllers
 		}
 
 
-		private RefreshToken GenerateRefreshToken()
+		private RefreshToken GenerateRefreshToken(string token)
 		{
 			var refreshToken = new RefreshToken
 			{
-				Token = Convert.ToBase64String(RandomNumberGenerator.GetBytes(64)),
+				Token = token, //Convert.ToBase64String(RandomNumberGenerator.GetBytes(64)),
 				Expires = DateTime.Now.AddDays(1), // could be 15 mins
 				Created = DateTime.Now
 			};
