@@ -130,7 +130,7 @@ namespace CC.Controllers
 			//
 
 			string token = CreateToken(user);
-			var newRefreshToken = GenerateRefreshToken();
+			var newRefreshToken = GenerateRefreshToken(token);
 			SetRefreshToken(newRefreshToken);
 
 			return Ok(token);
