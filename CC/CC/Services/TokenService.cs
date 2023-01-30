@@ -12,6 +12,12 @@ namespace CC.Services
 			_dbContext = context;
 		}
 
+		//temporary quick comparison
+		public RefreshTokenDTO GetRefreshTokenByTokenString(string userToken)
+		{
+			return _dbContext.UserTokens.Where(token => token.Token == userToken).FirstOrDefault();
+		}
+
 		public RefreshTokenDTO GetRefreshToken(int userId, string userToken)
 		{
 			return _dbContext.UserTokens.Where(token => token.UserId == userId && token.Token == userToken).FirstOrDefault();
