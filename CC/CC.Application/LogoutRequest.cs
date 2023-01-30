@@ -8,8 +8,7 @@ namespace CC.Application
 {
 	public class LogoutRequest
 	{
-		public RefreshToken userToken {get;set;}
-		public DateTime logoutTime {get;set;}
-		public User User {get;set;}
+		public RefreshToken UserToken {get;set;}
+		public DateTime LogoutTime {get;set;}
 	}
 }
