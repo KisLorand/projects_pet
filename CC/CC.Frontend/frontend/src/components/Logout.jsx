@@ -7,7 +7,9 @@ const Logout = () => {
     const userRef = useRef();
     const errRef = useRef();
 
-    useEffect( async () => {
+
+    
+   /*  useEffect( async () => {
         //userRef.current.focus();
         try {
             if (!localStorage.getItem('userToken')) throw Error("Not Logged in.");
@@ -27,7 +29,7 @@ const Logout = () => {
             
         }
         localStorage.removeItem("userToken");
-    }, [])
+    }, [useRef]) */
 
   return (
     <section>
