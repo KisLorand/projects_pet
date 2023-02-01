@@ -6,8 +6,11 @@ const LogoutBtn = () => {
     const handleClick = async ()=>{
         try {
             if (!localStorage.getItem('userToken')) throw Error("Not Logged in.");
+            
+            const a = localStorage.getItem('userToken');
+            console.log(a);
             const obj = {
-                "userToken" : localStorage.getItem('userToken'),
+                "userToken" : a,
                 "logoutTime" : Date.now()
             };
             console.log(obj);
