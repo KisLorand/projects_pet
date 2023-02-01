@@ -93,12 +93,12 @@ namespace CC.Controllers
 		[HttpPost("logout")]
 		public async Task<ActionResult<string>> Logout(LogoutRequest request)
 		{
-			if (request.UserToken is null)
+/*			if (request.UserToken is null)
 			{
 				return BadRequest("No Token or User Found In Request");
-			}
+			}*/
 
-			RefreshTokenDTO refreshToken = _tokenService.GetRefreshTokenByTokenString(request.UserToken.Token);
+			RefreshTokenDTO refreshToken = _tokenService.GetRefreshTokenByTokenString(request.UserToken); //.Token);
 			//user = _userService.GetUserByName(request.User.Username);
 
 			if (refreshToken is null)
