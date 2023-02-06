@@ -86,30 +86,27 @@ namespace CC.Controllers
 			});
 
 			return Ok(refreshToken);
-			//return Ok(token);
 		}
 
 		//should be protected
 		[HttpPost("logout")]
 		public async Task<ActionResult<RefreshToken>> Logout(RefreshToken request)
 		{
-/*			if (request.UserToken is null)
-			{
-				return BadRequest("No Token or User Found In Request");
-			}*/
-
 			RefreshTokenDTO refreshToken = _tokenService.GetRefreshTokenByTokenString(request.Token);
-			//user = _userService.GetUserByName(request.User.Username);
-
 			if (refreshToken is null)
 			{
 				return NotFound("User or Token Not Found");
 			}
 
+/*			var currentUser = _userService.GetUserByName(request.User.Username);
+			if(currentUser is null)
+			{
+				return BadRequest("No Token or User Found In Request");
+			}*/
+
 			var updatedToken = _tokenService.SetTokenExpiration(refreshToken.Token, DateTime.Now);
 
 			return Ok(updatedToken);
-			//return Ok(request);
 		}
 
 		[HttpPost("refresh-token")] // periodically called by the frontend to refresh the token
