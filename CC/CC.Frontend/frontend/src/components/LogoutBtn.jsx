@@ -7,21 +7,18 @@ const LogoutBtn = () => {
         try {
             if (!localStorage.getItem('userToken')) throw Error("Not Logged in.");
             
-            const a = localStorage.getItem('userToken');
-            console.log(a);
-            const obj = {
-                "userToken" : a,
+            const currentToken = localStorage.getItem('userToken');
+            console.log(currentToken);
+/*             const obj = {
+                "userToken" : currentToken,
                 "logoutTime" : Date.now()
-            };
-            console.log(obj);
+            }; */
             const response = await fetch(LOGOUT_URL,{
                 method: "POST",
                 headers: {
                   "Content-Type": "application/json",
                 },
-                body: JSON.stringify(
-                    obj
-                ),
+                body: currentToken
             });
             console.log(response);
             if (!response.ok)
