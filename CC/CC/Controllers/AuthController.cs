@@ -59,7 +59,7 @@ namespace CC.Controllers
 
 
 		[HttpPost("login")]
-		public async Task<ActionResult<string>> Login(UserDto userData)
+		public async Task<ActionResult<RefreshToken>> Login(UserDto userData)
 		{
 			user = _userService.GetUserByName(userData.Username);
 
@@ -91,7 +91,7 @@ namespace CC.Controllers
 
 		//should be protected
 		[HttpPost("logout")]
-		public async Task<ActionResult<string>> Logout(LogoutRequest request)
+		public async Task<ActionResult<RefreshToken>> Logout(LogoutRequest request)
 		{
 /*			if (request.UserToken is null)
 			{
