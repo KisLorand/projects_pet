@@ -73,10 +73,11 @@ const Login = () => {
             });
             console.log(response);
             if (response.ok) {
+                console.log("ok");
                 const body = await response.json();
                 localStorage.setItem("userToken", JSON.stringify(body));
-            }
-            if (!response.ok) {
+            } else {
+                console.log("response status" + response.status);
                 throw Error(response.status);
             }
             setUser('');
@@ -84,6 +85,7 @@ const Login = () => {
             setPwd('');
             setSuccess(true);
         } catch (error) {
+            console.log("FRV");
             if (!error?.message) {
                 setErrMsg('No Server Response')
             } else if (error.message === '400') {

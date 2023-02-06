@@ -1,4 +1,5 @@
-﻿using CC.DTOs;
+﻿using CC.Application;
+using CC.DTOs;
 using CC.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
@@ -18,11 +19,13 @@ namespace CC.Controllers
 		private ILogger<AuthController> _logger;
 		private readonly IConfiguration _configuration;
 		private readonly IUserService _userService;
+		private readonly ITokenService _tokenService;
 
-		public AuthController(IConfiguration configuration, IUserService userService, ILogger<AuthController> logger)
+		public AuthController(IConfiguration configuration, IUserService userService, ITokenService tokenService, ILogger<AuthController> logger)
 		{
 			_configuration = configuration;
 			_userService = userService;
+			_tokenService = tokenService;
 			_logger = logger;
 		}
 
@@ -56,7 +59,7 @@ namespace CC.Controllers
 
 
 		[HttpPost("login")]
-		public async Task<ActionResult<string>> Login(UserDto userData)
+		public async Task<ActionResult<RefreshToken>> Login(UserDto userData)
 		{
 			user = _userService.GetUserByName(userData.Username);
 
@@ -70,13 +73,40 @@ namespace CC.Controllers
 				return BadRequest(userData.Password);
 			}
 
-			string token = CreateToken(user);
+			string token = CreateToken(user); // return a token that conains user info
 
-			var refreshToken = GenerateRefreshToken();
+			var refreshToken = GenerateRefreshToken(token);
 			SetRefreshToken(refreshToken); //http only, on javascript will be able to read it
-			
+
+			_tokenService.AddToken(new RefreshTokenDTO {
+				UserId=user.Id,
+				Token=refreshToken.Token,
+				Created=refreshToken.Created,
+				Expires=refreshToken.Expires,
+			});
+
 			return Ok(refreshToken);
-			//return Ok(token);
+		}
+
+		//should be protected
+		[HttpPost("logout")]
+		public async Task<ActionResult<RefreshToken>> Logout(RefreshToken request)
+		{
+			RefreshTokenDTO refreshToken = _tokenService.GetRefreshTokenByTokenString(request.Token);
+			if (refreshToken is null)
+			{
+				return NotFound("User or Token Not Found");
+			}
+
+/*			var currentUser = _userService.GetUserByName(request.User.Username);
+			if(currentUser is null)
+			{
+				return BadRequest("No Token or User Found In Request");
+			}*/
+
+			var updatedToken = _tokenService.SetTokenExpiration(refreshToken.Token, DateTime.Now);
+
+			return Ok(updatedToken);
 		}
 
 		[HttpPost("refresh-token")] // periodically called by the frontend to refresh the token
@@ -97,7 +127,7 @@ namespace CC.Controllers
 			//
 
 			string token = CreateToken(user);
-			var newRefreshToken = GenerateRefreshToken();
+			var newRefreshToken = GenerateRefreshToken(token);
 			SetRefreshToken(newRefreshToken);
 
 			return Ok(token);
@@ -154,11 +184,11 @@ namespace CC.Controllers
 		}
 
 
-		private RefreshToken GenerateRefreshToken()
+		private RefreshToken GenerateRefreshToken(string token)
 		{
 			var refreshToken = new RefreshToken
 			{
-				Token = Convert.ToBase64String(RandomNumberGenerator.GetBytes(64)),
+				Token = token, //Convert.ToBase64String(RandomNumberGenerator.GetBytes(64)),
 				Expires = DateTime.Now.AddDays(1), // could be 15 mins
 				Created = DateTime.Now
 			};

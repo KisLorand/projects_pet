@@ -18,6 +18,7 @@ builder.Services.AddEndpointsApiExplorer();
 
 // services
 builder.Services.AddScoped<IUserService, UserService>();
+builder.Services.AddScoped<ITokenService, TokenService>();
 //
 builder.Services.AddHttpContextAccessor();
 
