@@ -29,6 +29,7 @@ const LogoutBtn = () => {
             console.log(error?.message);
         }
         localStorage.removeItem("userToken");
+        window.location.reload(); //
     }
   return (
 
