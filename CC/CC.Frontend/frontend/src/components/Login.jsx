@@ -1,8 +1,9 @@
 import React from 'react';
-import { useRef, useState, useEffect, useLocation, useNavigate } from "react";
+import { useRef, useState, useEffect, useLocation, useNavigate, useContext } from "react";
 import { faCheck, faTimes, faInfoCircle } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Link, redirect } from 'react-router-dom';
+import AuthContext from '../contexts/AuthProvider';
 
 const USER_REGEX = /^[A-z][A-z0-9-_]{3,23}$/;
 const PWD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%]).{8,24}$/;
@@ -10,7 +11,8 @@ const LOGIN_URL = 'https://localhost:44309/api/Auth/login';
 
 const Login = () => {
     //
-/*     const redirect = useNavigate();
+/*     const { setAuth } = useContext(AuthContext);
+    const redirect = useNavigate();
     const location = useLocation();
     const from = location.state?.from?.pathname || "/"; */
     //
@@ -58,7 +60,7 @@ const Login = () => {
             return;
         }
 
-        try {
+    try {
             const response = await fetch(LOGIN_URL,{
                 method: "POST",
                 headers: {
@@ -84,6 +86,8 @@ const Login = () => {
             setValidName('');
             setPwd('');
             setSuccess(true);
+            //redirect(from, { replace: true });
+            
         } catch (error) {
             console.log("FRV");
             if (!error?.message) {
