@@ -33,6 +33,7 @@ const Login = () => {
 
     useEffect(() => {
         userRef.current.focus(); 
+        checkUser();
     }, [])
 
     useEffect(() => {
@@ -50,6 +51,14 @@ const Login = () => {
         setValidPwd(result);
     }, [pwd])
 
+    function checkUser() {
+        if (localStorage.getItem("userToken") !== null)
+        {
+            setSuccess(true);
+        }
+    }
+    
+
     const handleSubmit = async (e) => {
         e.preventDefault();
         // if button enabled with JS hack, recheck values
@@ -61,46 +70,46 @@ const Login = () => {
         }
 
         try {
-                const response = await fetch(LOGIN_URL,{
-                    method: "POST",
-                    headers: {
-                    "Content-Type": "application/json",
-                    },
-                    body: JSON.stringify(
-                        {
-                            "username" : user,
-                            "password" : pwd
-                        }
-                    ),
-                });
-                console.log(response);
-                if (response.ok) {
-                    console.log("ok");
-                    const body = await response.json();
-                    localStorage.setItem("userToken", JSON.stringify(body));
-                } else {
-                    console.log("response status" + response.status);
-                    throw Error(response.status);
-                }
-                setUser('');
-                setValidName('');
-                setPwd('');
-                setSuccess(true);
-                //redirect(from, { replace: true });
-                
-            } catch (error) {
-                console.log("FRV");
-                if (!error?.message) {
-                    setErrMsg('No Server Response')
-                } else if (error.message === '400') {
-                    setErrMsg('Wrong Username or Password');
-                } else if (error.message === '404') {
-                    setErrMsg('User Not Found');
-                } else {
-                    setErrMsg('Login Failed');
-                }
-                errRef.current.focus();
+            const response = await fetch(LOGIN_URL,{
+                method: "POST",
+                headers: {
+                "Content-Type": "application/json",
+                },
+                body: JSON.stringify(
+                    {
+                        "username" : user,
+                        "password" : pwd
+                    }
+                ),
+            });
+            console.log(response);
+            if (response.ok) {
+                console.log("ok");
+                const body = await response.json();
+                localStorage.setItem("userToken", JSON.stringify(body));
+            } else {
+                console.log("response status" + response.status);
+                throw Error(response.status);
             }
+            setUser('');
+            setValidName('');
+            setPwd('');
+            setSuccess(true);
+            //redirect(from, { replace: true });
+                
+        } catch (error) {
+            console.log("FRV");
+            if (!error?.message) {
+                setErrMsg('No Server Response')
+            } else if (error.message === '400') {
+                setErrMsg('Wrong Username or Password');
+            } else if (error.message === '404') {
+                setErrMsg('User Not Found');
+            } else {
+                setErrMsg('Login Failed');
+            }
+            errRef.current.focus();
+        }
     };
 
   return (

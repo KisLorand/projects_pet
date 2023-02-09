@@ -132,7 +132,16 @@ namespace CC.Controllers
 
 			return Ok(token);
 		}
-		
+
+
+		[HttpPost("getusertoken")]
+		//[Authorize]
+		public async Task<ActionResult<RefreshTokenDTO>> GetUserToken(RefreshToken refreshToken)
+		{
+			RefreshTokenDTO token = _tokenService.GetRefreshTokenByTokenString(refreshToken.Token);
+			return Ok(token);
+		}
+
 		//change the hashing in prod
 		private void CreatePasswordHash(string password, out byte[] passwordHash, out byte[] passwordSalt)
 		{
