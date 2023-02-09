@@ -8,6 +8,7 @@ import Login from './components/Login';
 import Logout from './components/Logout';
 import RequireAuth from './components/RequireAuth';
 import Unauthorized from './components/Unautorized';
+import CatImage from './components/CatImage';
 
 function App() {
   return (
@@ -23,6 +24,7 @@ function App() {
         {/* protected routes */} 
         <Route element={<RequireAuth />}> 
           <Route path="logout" element={<Logout/>}></Route>
+          <Route path="catpng" element={<CatImage/>}></Route>
         </Route>
 
       </Route> 
