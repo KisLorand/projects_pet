@@ -33,6 +33,7 @@ const Login = () => {
 
     useEffect(() => {
         userRef.current.focus(); 
+        checkUser();
     }, [])
 
     useEffect(() => {
@@ -49,6 +50,14 @@ const Login = () => {
         console.log(pwd);
         setValidPwd(result);
     }, [pwd])
+
+    function checkUser() {
+        if (localStorage.getItem("userToken") !== null)
+        {
+            setSuccess(true);
+        }
+    }
+    
 
     const handleSubmit = async (e) => {
         e.preventDefault();
