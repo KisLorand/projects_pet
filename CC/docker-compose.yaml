@@ -8,6 +8,7 @@ services:
     container_name: frontend
     ports:
       - "8090:80"
+    network_mode: "host"
   api:
     build:
       context: .
