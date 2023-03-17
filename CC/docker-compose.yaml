@@ -14,16 +14,19 @@ services:
       context: .
       dockerfile: CC/Dockerfile
     container_name: controllers
-    ports:
-      - "8080:80"
     depends_on:
       - db
+    ports:
+      - "8080:80"
+    environment:
+      DB_HOST: db
+      DB_PORT: 1433
+      WAIT_HOSTS: db:1433
   db:
     image: "mcr.microsoft.com/mssql/server:2022-latest"
     container_name: db
     ports:
       - "1433:1433"
-
     environment:
-        SA_PASSWORD: "S3cur3P@ssW0rd!"
-        ACCEPT_EULA: "Y"
+      - Database=CCommandContext
+      - ACCEPT_EULA=Y
