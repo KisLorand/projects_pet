@@ -9,7 +9,7 @@ services:
     ports:
       - "8090:80"
     network_mode: "host"
-  api:
+  backend:
     build:
       context: .
       dockerfile: CC/Dockerfile
@@ -21,7 +21,6 @@ services:
     environment:
       DB_HOST: db
       DB_PORT: 1433
-      WAIT_HOSTS: db:1433
   db:
     image: "mcr.microsoft.com/mssql/server:2022-latest"
     container_name: db
