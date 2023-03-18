@@ -7,7 +7,8 @@ import AuthContext from '../contexts/AuthProvider';
 
 const USER_REGEX = /^[A-z][A-z0-9-_]{3,23}$/;
 const PWD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%]).{8,24}$/;
-const LOGIN_URL = 'https://localhost:44309/api/Auth/login';
+// const LOGIN_URL = 'https://localhost:44309/api/Auth/login';
+const LOGIN_URL = 'http://localhost:8080/api/Auth/login';
 
 const Login = () => {
     //
