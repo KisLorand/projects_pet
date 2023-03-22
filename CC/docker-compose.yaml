@@ -7,8 +7,11 @@ services:
       dockerfile: Dockerfile
     container_name: frontend
     ports:
-      - "8090:80"
-    network_mode: "host"
+      - "3000:3000"
+    expose:
+      - "3000"
+    networks:
+      - myNetwork
   backend:
     build:
       context: .
@@ -17,15 +20,26 @@ services:
     depends_on:
       - db
     ports:
-      - "8080:80"
+      - "5000:5000"
+    expose:
+      - "5000"
     environment:
       DB_HOST: db
       DB_PORT: 1433
+    networks:
+      - myNetwork
   db:
     image: "mcr.microsoft.com/mssql/server:2022-latest"
     container_name: db
     ports:
       - "1433:1433"
+    expose:
+      - "1433"
     environment:
       - Database=CCommandContext
       - ACCEPT_EULA=Y
+    networks:
+      - myNetwork
+networks:
+  myNetwork:
+    driver: bridge
