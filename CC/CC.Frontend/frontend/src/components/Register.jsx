@@ -4,7 +4,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 const USER_REGEX = /^[A-z][A-z0-9-_]{3,23}$/;
 const PWD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%]).{8,24}$/;
-const REGISTER_URL = 'http://localhost:3000/api/Auth/register'; //'https://localhost:44309/api/Auth/register';
+const REGISTER_URL = 'http://localhost:3000/api/Auth/register';
 
 
 const Register = () => {
