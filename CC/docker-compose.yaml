@@ -36,8 +36,10 @@ services:
     expose:
       - "1433"
     environment:
-      - Database=CCommandContext
+      - SA_PASSWORD=Pa55w0rd2023
+      - DATABASE=CCommandContext
       - ACCEPT_EULA=Y
+      - MSSQL_PID=Express
     networks:
       - myNetwork
 networks:
