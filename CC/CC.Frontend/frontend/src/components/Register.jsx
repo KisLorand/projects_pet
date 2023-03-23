@@ -191,9 +191,7 @@ const Register = () => {
             </p>
 
             <button disabled={!validName || !validPwd || !validMatch ? true : false}>
-                <a href="#">{/* react router link */}
                     Sign Up
-                </a> 
             </button>
         </form>
     </section>
