@@ -44,11 +44,24 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
 			ValidateAudience = false
 		};
 	});
+
+
 builder.Services.AddDbContext<ICCContext, CCContext>(options =>
 {
-	var connectionstring = builder.Configuration.GetConnectionString("CCommandContext");
+	var server = builder.Configuration["DB_HOST"] ?? "localhost";
+	var port = builder.Configuration["DB_PORT"] ?? "1433";
+	var user = builder.Configuration["DB_USER"] ?? "SA";
+	var password = builder.Configuration["DB_PASSWORD"] ?? "Pa55w0rd2023";
+	var database = builder.Configuration["DATABASE"] ?? "CCommandContext";
+
+	var connectionstring = $"Server={server},{port};Initial Catalog={database};User ID={user};Password={password};TrustServerCertificate=true";
 	options.UseSqlServer(connectionstring);
 });
+// builder.Services.AddDbContext<ICCContext, CCContext>(options =>
+// {
+// 	var connectionstring = builder.Configuration.GetConnectionString("CCommandContext");
+// 	options.UseSqlServer(connectionstring);
+// });
 
 builder.Services.AddTransient<CCSeed>();
 
@@ -57,7 +70,7 @@ var app = builder.Build();
 using var scope = app.Services.CreateScope();
 var services = scope.ServiceProvider;
 var initialiser = services.GetRequiredService<CCSeed>();
-// initialiser.Seed();
+initialiser.Seed();
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
