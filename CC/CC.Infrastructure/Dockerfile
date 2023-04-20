@@ -1,15 +1,40 @@
-
 FROM mcr.microsoft.com/mssql/server:2022-latest AS base
 
-# COPY CCSeed.sql .
+USER root
+
+# Create a config directory
+RUN mkdir -p /usr/config
+
+# Bundle config source
+# COPY . /usr/config
+# WORKDIR /usr/config
 WORKDIR /src
-COPY ["CC.Infrastructure/CCSeed.sql", "src/CCSeed.sql"]
-COPY ["CC.Infrastructure/setup.sh", "src/setup.sh"]
 
-ENV ACCEPT_EULA=Y
-ENV sa_password=Pa55w0rd2023
+COPY ["CC.Infrastructure/", "src/"]
 
-CMD ["bash", "src/setup.sh"]
+# Grant permissions for to our scripts to be executable
+RUN ["chmod", "+x", "src/entrypoint.sh"]
+RUN ["chmod", "+x", "src/configure-db.sh"]
+
+ENTRYPOINT ["src/entrypoint.sh"]
+# FROM mcr.microsoft.com/mssql/server:2022-latest AS base
+
+# # COPY CCSeed.sql .
+# WORKDIR /src
+# COPY ["CC.Infrastructure/CCSeed.sql", "src/CCSeed.sql"]
+# COPY ["CC.Infrastructure/setup.sh", "src/setup.sh"]
+
+# ENV ACCEPT_EULA=Y
+# ENV sa_password=Pa55w0rd2023
+# ENV database=CCommandContext
+# ENV accept_eula=Y
+# ENV mssql_pid=Express
+
+# CMD ["bash", "src/setup.sh"]
+
+# EXPOSE 1433
+
+
 #RUN bash -c /src/setup.sh
 
 
