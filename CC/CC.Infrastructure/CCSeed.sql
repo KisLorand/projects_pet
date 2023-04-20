@@ -16,3 +16,6 @@ CREATE TABLE UserTokens (
     CONSTRAINT [user_id_key] FOREIGN KEY ([user_id]) REFERENCES [users]([id])
 );
 
+INSERT INTO Users (Username, PasswordHash, PasswordSalt) VALUES
+    ('John', 'asdqwert', 'ahcd')
+;
