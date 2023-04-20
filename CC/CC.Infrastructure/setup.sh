@@ -1,5 +1,5 @@
 #!/bin/bash
 set -e
-service mssql start
-mssql < /mssql/CCSeed.sql
+mssql start
+mssql < /src/CCSeed.sql
 service mssql stop
