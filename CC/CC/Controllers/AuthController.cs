@@ -43,6 +43,14 @@ namespace CC.Controllers
 		}
 		//
 
+		[HttpGet("GetTestUser")]
+		public ActionResult<User> GetTestUser()
+		{
+			var user =_userService.GetUserByName("John");
+			return Ok(user);
+		}
+
+
 		[HttpPost("register")]
 		public async Task<ActionResult<User>> Register(UserDto userData)
 		{

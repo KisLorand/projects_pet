@@ -17,7 +17,7 @@ FROM development AS build
 
 RUN npm run build --force
 
-FROM development as dev-envs
+FROM build as dev-envs
 # RUN <<EOF
 # apt-get update
 # apt-get install -y --no-install-recommends git
@@ -30,9 +30,11 @@ RUN npm install -g http-server
 # usermod -aG docker vscode
 # EOF
 # install Docker tools (cli, buildx, compose)
-COPY --from=gloursdocker/docker / /
+# COPY --from=gloursdocker/docker / /
+WORKDIR /app
+RUN ls
 
 # CMD [ "npm", "start" ]
 
 # CMD ["npx", "http-server", "--gzip", "--proxy", "http://backend:5000", "--port", "3000", "./build"]
-CMD ["npm", "start", "&&", "http-server", "--gzip", "--proxy", "http://backend:5000", "--port", "3000", "./build"]
+CMD http-server --gzip --proxy http://backend:80 --port 3000 /app/build
