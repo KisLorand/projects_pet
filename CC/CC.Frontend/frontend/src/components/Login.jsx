@@ -7,15 +7,9 @@ import AuthContext from '../contexts/AuthProvider';
 
 const USER_REGEX = /^[A-z][A-z0-9-_]{3,23}$/;
 const PWD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%]).{8,24}$/;
-const LOGIN_URL = 'https://localhost:44309/api/Auth/login';
+const LOGIN_URL = '/api/Auth/login';
 
 const Login = () => {
-    //
-/*     const { setAuth } = useContext(AuthContext);
-    const redirect = useNavigate();
-    const location = useLocation();
-    const from = location.state?.from?.pathname || "/"; */
-    //
 
     const userRef = useRef();
     const errRef = useRef();
@@ -57,7 +51,6 @@ const Login = () => {
             setSuccess(true);
         }
     }
-    
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -95,7 +88,6 @@ const Login = () => {
             setValidName('');
             setPwd('');
             setSuccess(true);
-            //redirect(from, { replace: true });
                 
         } catch (error) {
             console.log("FRV");
@@ -175,7 +167,7 @@ const Login = () => {
                     <span aria-label="percent">%</span>
                 </p>
                 <button disabled={!validName || !validPwd ? true : false}>
-                    Sign Up
+                    Sign In
                 </button>
             </form>
             <p>

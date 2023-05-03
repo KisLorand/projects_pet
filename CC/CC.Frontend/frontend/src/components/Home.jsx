@@ -1,9 +1,26 @@
 import React from 'react';
 
+const R_URL = 'http://localhost:3000/api/Auth/GetTestUser';
+
 const Home = () => {
+  const handleClick = async (e) => {
+    e.preventDefault();
+  try {
+    const response = await fetch(R_URL);
+    console.log("POST");
+    if (!response.ok) throw Error(response.status)
+    else {
+      const body = await response.json();
+      console.log(body);
+    }
+  } catch (error) {
+    console.log(error);
+  }
+}
+
   return (
     <div>
-      <h2>Home</h2>
+      <h2 onClick={handleClick}>Home</h2>
       <section>
         example text
         <p>

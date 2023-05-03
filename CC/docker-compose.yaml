@@ -1,0 +1,49 @@
+version: "3.4"
+
+services:
+  frontend:
+    build:
+      context: CC.Frontend/frontend
+      dockerfile: Dockerfile
+    container_name: frontend
+    ports:
+      - "3000:3000"
+    expose:
+      - "3000"
+    networks:
+      - myNetwork
+  backend:
+    build:
+      context: .
+      dockerfile: CC/Dockerfile
+    container_name: controllers
+    depends_on:
+      - db
+    ports:
+      - "5000:5000"
+    expose:
+      - "5000"
+    environment:
+      DB_HOST: db
+      DB_PORT: 1433
+    networks:
+      - myNetwork
+  db:
+    build:
+      context: .
+      dockerfile: CC.Infrastructure/Dockerfile
+    container_name: db
+    ports:
+      - "1433:1433"
+    expose:
+      - "1433"
+    environment:
+      - SA_PASSWORD=Pa55w0rd2023
+      - DATABASE=CCommandContext
+      - ACCEPT_EULA=Y
+      - MSSQL_PID=Express
+    networks:
+      - myNetwork
+networks:
+  myNetwork:
+    driver: bridge
