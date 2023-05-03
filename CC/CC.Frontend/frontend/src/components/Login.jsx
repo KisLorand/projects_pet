@@ -167,7 +167,7 @@ const Login = () => {
                     <span aria-label="percent">%</span>
                 </p>
                 <button disabled={!validName || !validPwd ? true : false}>
-                    Sign Up
+                    Sign In
                 </button>
             </form>
             <p>
