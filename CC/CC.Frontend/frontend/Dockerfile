@@ -30,5 +30,6 @@ FROM build as dev-envs
 ## test express http-server
 RUN npm install -g express --save && npm install --save-dev http-proxy-middleware
 WORKDIR /app
-CMD ls && node ./express_http_server_proxy/http-sever.js
+CMD node ./express_http_server_proxy/http-sever.js
+ENTRYPOINT npx serve -s build
 ##
