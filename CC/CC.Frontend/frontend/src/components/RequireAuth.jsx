@@ -1,7 +1,7 @@
 import { useRef, useState, useEffect, useNavigate, useContext } from "react";
 import { useLocation, Navigate, Outlet } from "react-router-dom";
 
-const AUTH_URL = 'https://localhost:44309/api/Auth/getusertoken';
+const AUTH_URL = '/api/Auth/getusertoken'; //'https://localhost:44309/api/Auth/getusertoken';
 
 const RequireAuth = () => {
     const location = useLocation();
