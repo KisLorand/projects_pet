@@ -56,13 +56,14 @@ namespace CC.Controllers
 		{
 			CreatePasswordHash(userData.Password, out byte[] passwordHash, out byte[] passwordSalt);
 
-			user.Username = userData.Username;
-			user.PasswordHash = passwordHash;
-			user.PasswordSalt = passwordSalt;
+			var newUser = new User();
+			newUser.Username = userData.Username;
+			newUser.PasswordHash = passwordHash;
+			newUser.PasswordSalt = passwordSalt;
 
-			_userService.AddUser(user);
+			_userService.AddUser(newUser);
 
-			return Ok(user);
+			return Ok(newUser);
 		}
 
 
