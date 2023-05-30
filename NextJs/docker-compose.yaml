@@ -1,0 +1,12 @@
+version: "3.4"
+
+services:
+  frontend:
+    build:
+      context: ccnext01
+      dockerfile: Dockerfile
+    container_name: frontend_nextjs
+    ports:
+      - "3000:3000"
+    expose:
+      - "3000"

@@ -18,7 +18,18 @@ FROM development AS build
 RUN npm run build --force
 
 FROM build as dev-envs
+
+### npm http-server
 RUN npm install -g http-server
 
 WORKDIR /app
 CMD http-server --gzip --proxy http://backend:80 --port 3000 /app/build
+###
+
+
+## test express http-server
+# RUN npm install -g express --save && npm install --save-dev http-proxy-middleware && npm i needle
+# WORKDIR /app
+# CMD node ./express_http_server_proxy/http-sever.js
+# ENTRYPOINT npx serve -s build
+##
