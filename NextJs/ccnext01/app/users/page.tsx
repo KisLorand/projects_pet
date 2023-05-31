@@ -10,6 +10,8 @@ export default async function UsersPage() {
     const usersData: Promise<User[]> = getAllUsers();
     const users = await usersData;
 
+    console.log("fetchng on the server comp");
+
     const content = (
         <section>
             <h2>
@@ -19,16 +21,16 @@ export default async function UsersPage() {
             {users.map(user => {
                 return (
                     <>
-                        <p key={user.id}>
-                            <Link href={`/users/${user.id}`}></Link>
-                        </p>
+                    <p key={user.id}>
+                        <Link href={`/users/${user.id}`}>
+                            {user.name}
+                        </Link>
+                    </p>
                     </>
                 )
             })}
         </section>
     )
 
-  return (
-    <div>page</div>
-  )
+  return content;
 }
