@@ -1,13 +1,20 @@
 import Image from 'next/image'
 import { Inter } from '@next/font/google'
 import styles from './page.module.css'
+import type { Metadata } from 'next'
+import Link from 'next/link'
+
+export const metadata: Metadata = {
+  title: 'Home',
+  description: 'Welcome to the Next.js test project pageS'
+}
 
 const inter = Inter({ subsets: ['latin'] })
 
 export default function Home() {
   return (
-    <main className={styles.main}>
-      {/* <div className={styles.description}>
+    <main>  {/* className={styles.main}>
+     <div className={styles.description}>
         <p>
           Get started by editing&nbsp;
           <code className={styles.code}>app/page.tsx</code>
@@ -87,6 +94,9 @@ export default function Home() {
         </a>
       </div> */}
       <h1>Hello there.</h1>
+      <p>
+        <Link href="/users">Users</Link>
+      </p>
     </main>
   )
 }
