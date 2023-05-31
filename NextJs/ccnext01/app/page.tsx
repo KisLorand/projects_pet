@@ -2,6 +2,7 @@ import Image from 'next/image'
 import { Inter } from '@next/font/google'
 import styles from './page.module.css'
 import type { Metadata } from 'next'
+import Link from 'next/link'
 
 export const metadata: Metadata = {
   title: 'Home',
@@ -93,6 +94,9 @@ export default function Home() {
         </a>
       </div> */}
       <h1>Hello there.</h1>
+      <p>
+        <Link href="/users">Users</Link>
+      </p>
     </main>
   )
 }
