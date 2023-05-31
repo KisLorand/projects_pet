@@ -23,7 +23,7 @@ export default async function UserPage({ params: {userId}}: Params) {
       <h2>{user.name}</h2>
       <br/>
       <Suspense fallback={<h2>Loading ...</h2>}>
-        <UserPosts posts={userPosts}/>
+        <UserPosts promise={userPostsData}/>
       </Suspense>
     </>
   )
