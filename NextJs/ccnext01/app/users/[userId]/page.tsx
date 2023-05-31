@@ -4,7 +4,7 @@ type Params = {
     }
 }
 
-export default function UserPage() {
+export default function UserPage({ params: {userId}}: Params) {
   return (
     <div>page</div>
   )
