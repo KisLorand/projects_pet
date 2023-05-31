@@ -7,6 +7,7 @@ export const metadata: Metadata = {
 }
 
 export default function About() {
+    throw new Error('error occoured');
     return (
         <>
             <h1>About</h1>
