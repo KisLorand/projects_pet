@@ -1,6 +1,12 @@
 import Image from 'next/image'
 import { Inter } from '@next/font/google'
 import styles from './page.module.css'
+import type { Metadata } from 'next'
+
+export const metadata: Metadata = {
+  title: 'Home',
+  description: 'Welcome to the Next.js test project pageS'
+}
 
 const inter = Inter({ subsets: ['latin'] })
 
