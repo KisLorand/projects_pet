@@ -16,7 +16,7 @@ type Params = {
 export async function generateMetadata({ params: {userId}}: Params): Promise<Metadata> {
   const userData: Promise<User> = getUser(userId); 
   const user: User = await userData;
-  
+
   if (!user.name) {
     return {
       title: "User Not Found"
@@ -38,6 +38,10 @@ export default async function UserPage({ params: {userId}}: Params) {
   // const [user, userPosts] = await Promise.all([userData, userPostsData]);
 
   const user = await userData;
+
+  if (!user.name) {
+    return notFound();
+  }
 
   return (
     <>
