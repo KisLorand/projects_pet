@@ -5,6 +5,8 @@ import UserPosts from './components/UserPosts'
 import { Metadata } from 'next'
 import getAllUsers from '@/lib/getAllUsers'
 
+import { notFound } from 'next/navigation'
+
 type Params = {
     params: {
         userId: string
