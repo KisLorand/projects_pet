@@ -1,6 +1,10 @@
+import { notFound } from "next/navigation";
 
 export default function NotFound() {
   return (
-    <div>NotFound</div>
+    <>
+        <h1>The requested user does not exist</h1>
+        <div>404</div>
+    </>
   )
 }
