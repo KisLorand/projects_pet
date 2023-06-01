@@ -45,5 +45,9 @@ export default async function UserPage({ params: {userId}}: Params) {
 export async function generateStaticParams() {
   //next.js deduplicates the data from fetching
   const usersData: Promise<User[]> = getAllUsers();
-  
+  const users = await usersData;
+
+  return users.map(user => ({ 
+    userId: user.id.toString() // all params are strings, but we provide these in advance. Here uesr.id is a number type 
+  }));
 }
