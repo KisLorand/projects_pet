@@ -17,7 +17,7 @@ export async function generateMetadata({ params: {userId}}: Params): Promise<Met
   const userData: Promise<User> = getUser(userId); 
   const user: User = await userData;
 
-  if (!user.name) {
+  if (user === undefined || !user.name) {
     return {
       title: "User Not Found"
     }
@@ -39,7 +39,7 @@ export default async function UserPage({ params: {userId}}: Params) {
 
   const user = await userData;
 
-  if (!user.name) {
+  if (user === undefined || !user.name) {
     return notFound();
   }
 
