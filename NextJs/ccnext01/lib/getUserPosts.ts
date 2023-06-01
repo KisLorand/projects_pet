@@ -5,6 +5,6 @@ export default async function getUserPosts(userId: string) {
     // no-store is the opposite, not store the data
     // incrementaly - ISR - Incramental Static Regeneration
     // { next: { revalidate: 60 } }
-    if (!response.ok) throw undefined;
+    if (!response.ok) return undefined;
     return response.json();
 }
